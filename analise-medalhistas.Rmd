@@ -1,0 +1,32 @@
+---
+title: "Análise dos Medalhistas 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
+```{r}
+library(tidyverse)
+library(plotly)
+```
+
+Este trabalho tem como objetivo analisar os dados dos medalhistas da [OPI](http://www.dsc.ufcg.edu.br/~opi/) 2016 com o intuito de caracterizar o perfil destes medalhistas com respeito à suas práticas e motivações.
+
+
+```{r}
+premiados_geral <- read_csv("data/Respostas - Editado para análise - Geral.csv")
+```
+
+# Quais as estratégias de preparação mais comuns entre os participantes campeões recorrentes e os novatos?
+
+# Qual o impacto dos treinamentos do projeto olímpico sobre o desempenho dos medalhistas?
+
+# De onde vem o incentivo mais comum para os medalhistas?
+
+# Existe um perfil que caracteriza os medalhistas antes de começarem a participar de olimpíadas de informática?
+
+# Qual a relação dos medalhistas com a computação?
+
+# Quais as motivações para os medalhistas continuarem competindo em olimpíadas de informática?
