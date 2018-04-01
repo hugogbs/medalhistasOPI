@@ -24,9 +24,79 @@ Este trabalho tem como objetivo analisar os dados dos medalhistas da [OPI](http:
 
 ```{r}
 premiados_geral <- read_csv("data/Respostas - Editado para análise - Geral.csv")
+
+categorias_opi <- c("Iniciação I", "Iniciação II", "Programação", "Avançado Júnior", "Avançado Sênior")
 ```
 
+# Visão geral
+
+Foram coletadas as respostas de `r nrow(premiados_geral)` medalhistas na OPI 2016, estando distribuídos da seguinte forma nas categorias da competição:
+
+```{r}
+premiados_geral %>%
+  mutate(categoria = factor(categoria, categorias_opi)) %>%
+  group_by(categoria) %>%
+  summarise(n = n()) %>%
+  plot_ly(x = ~n, y = ~categoria, type = 'bar') %>%
+  layout(title = "Medahistas entrevistados por categoria",
+       xaxis = list(title = "Número de entrevistados"),
+       yaxis = list(title = "Categoria"),
+       margin = list(l = 120))
+```
+
+Quanto à distribuição de gênero temos:
+
+```{r}
+premiados_geral %>%
+  group_by(genero) %>%
+  summarise(n = n()) %>%
+  plot_ly(x = ~genero, y = ~n, color = ~genero, type = 'bar') %>%
+  hide_legend() %>%
+  layout(title = 'Distribuição de gênero dos entrevistados',
+         xaxis = list(title = "Gênero"),
+         yaxis = list(title = "Quantidade"))
+  
+```
+
+```{r}
+premiados_geral %>%
+  mutate(categoria = factor(categoria, categorias_opi)) %>%
+  group_by(categoria, genero) %>%
+  summarise(n = n()) %>%
+  plot_ly(x = ~n, y = ~categoria, color = ~genero, type = 'bar') %>%
+  hide_legend() %>%
+  layout(title = "Distribuição de gênero por categoria",
+         xaxis = list(title = "Número de entrevistados"),
+         yaxis = list(title = "Categoria"),
+         barmode = 'stack')
+```
+
+No que diz respeito à idade dos entrevistados temos:
+
+```{r}
+p <- premiados_geral %>%
+  mutate(categoria = factor(categoria, categorias_opi)) %>%
+  plot_ly(y = ~idade) 
+
+p1 <- p %>% add_boxplot(x = "Geral")
+p2 <- p %>% add_boxplot(x = ~categoria) %>%
+  layout(xaxis = list(title = "Categoria"))
+
+subplot(p1, p2, shareY = TRUE) %>%
+  hide_legend() %>%
+  layout(title = "Idade dos medalhistas",
+         yaxis = list(title = "Quantidade"),
+         margin = list(b = 100, r = 100))
+
+```
+
+
 # Quais as estratégias de preparação mais comuns entre os participantes campeões recorrentes e os novatos?
+
+```{r}
+
+```
+
 
 # Qual o impacto dos treinamentos do projeto olímpico sobre o desempenho dos medalhistas?
 
